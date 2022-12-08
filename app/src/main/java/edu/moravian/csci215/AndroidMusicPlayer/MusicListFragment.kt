@@ -1,20 +1,19 @@
-package edu.moravian.csci215.finalproject
+package edu.moravian.csci215.AndroidMusicPlayer
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import edu.moravian.csci215.finalproject.databinding.FragmentMusicListBinding
-import edu.moravian.csci215.finalproject.databinding.MusicListItemBinding
+import edu.moravian.csci215.AndroidMusicPlayer.databinding.FragmentMusicListBinding
+import edu.moravian.csci215.AndroidMusicPlayer.databinding.MusicListItemBinding
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -52,15 +51,13 @@ class MusicListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Setup the recycler view
         binding.musicListRecyclerView.adapter = MusicListAdapter()
-        // TODO() possibly do a swipe to add song to a playlist or remove song from a playlist
-        //ItemTouchHelper(SwipeToDeleteCallback()).attachToRecyclerView(binding.calendarRecyclerView)
 
-        // menu provider to the host activity
-//        requireActivity().addMenuProvider(
-//            MusicMenu(),
-//            viewLifecycleOwner,
-//            Lifecycle.State.RESUMED
-//        )
+        // the menu provider to the host activity
+        requireActivity().addMenuProvider(
+            MusicListMenu(),
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
 
         // Uses a coroutine to collect the events from the database (and notify the adapter that things have changed)
         lifecycleScope.launch {
@@ -83,11 +80,63 @@ class MusicListFragment : Fragment() {
      * Navigate to the song player fragment showing the specified event
      * @param song the song to show the details for
      */
-//    fun showSong(song: Song) {
-//        findNavController().navigate(
-//            MusicListFragmentDirections.showClickedEvent(song.id)
-//        )
-//    }
+    fun showSong(song: Song) {
+        findNavController().navigate(
+            MusicListFragmentDirections.showClickedSong(song.songId)
+        )
+    }
+
+    /**
+     * Insert a song into the database when it is created
+     */
+    fun insertSong(songName: String, artist: String) {
+        lifecycleScope.launch {
+            val newSong = Song(
+                songId = UUID.randomUUID(),
+                songName = songName,
+                artist = artist
+            )
+            musicListViewModel.insertSong(newSong)
+        }
+    }
+
+    /**
+     * function for when the menu item playlist
+     * is selected to navigate to the playlists fragment.
+     * Done in a function because when I tried to navigate in the
+     * menu functions the app would crash
+     */
+    private fun goToPlaylists() {
+        findNavController().navigate(
+            MusicListFragmentDirections.gotToPlaylists()
+        )
+    }
+
+    /**
+     * inner class for the Calendar menu and its functions
+     */
+    private inner class MusicListMenu: MenuProvider {
+        /**
+         * onCreateMenu inflate the menus defined in fragment_event_menu
+         * @param menu
+         * @param menuInflater
+         */
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.fragment_music_menu, menu)
+        }
+
+        /**
+         * onMenuItemSelected handles when an event is either saved or deleted
+         * @param menuItem
+         */
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            if (menuItem.itemId == R.id.go_to_playlists) {
+                goToPlaylists()
+                return true
+            }
+            return false
+        }
+    }
 
     /**
      * The ViewHolder for the items in the recycler view. This uses the layout
@@ -96,15 +145,17 @@ class MusicListFragment : Fragment() {
     private inner class MusicListHolder(val binding: MusicListItemBinding): RecyclerView.ViewHolder(binding.root) {
         /**
          * Update this view holder to display the given item.
-         * @param item the node whose data we should use
+         * @param song the song whose data we should use
          */
         fun bind(song: Song) {
             binding.apply {
-                name.text = song.songName
+                songName.text = song.songName
+                artist.text = song.artist
             }
 
             binding.root.setOnClickListener {
-                // showSong(song)
+                // when a song is clicked is shows the song in the PlaySongFragment
+                showSong(song)
             }
         }
     }

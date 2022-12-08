@@ -9,7 +9,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "edu.moravian.csci215.mocalendar"
+        applicationId "edu.moravian.csci215.AndroidMusicPlayer"
         minSdk 24
         targetSdk 32
         versionCode 1
@@ -61,6 +61,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.4.1"
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt 'androidx.room:room-compiler:2.4.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

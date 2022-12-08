@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/musicListFragment">
 
     <fragment
         android:id="@+id/musicListFragment"
-        android:name="edu.moravian.csci215.finalproject.MusicListFragment"
-        android:label="MusicListFragment" />
+        android:name="edu.moravian.csci215.AndroidMusicPlayer.MusicListFragment"
+        android:label="MusicListFragment"
+        tools:layout="@layout/fragment_music_list">
+        <action
+            android:id="@+id/show_clicked_song"
+            app:destination="@id/playSongFragment" />
+        <action
+            android:id="@+id/got_to_playlists"
+            app:destination="@id/playlistFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="edu.moravian.csci215.AndroidMusicPlayer.PlaylistFragment"
+        android:label="fragment_playlist"
+        tools:layout="@layout/fragment_playlist" >
+        <action
+            android:id="@+id/back_to_music_list_from_playlists"
+            app:destination="@id/musicListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playSongFragment"
+        android:name="edu.moravian.csci215.AndroidMusicPlayer.PlaySongFragment"
+        android:label="fragment_play_music"
+        tools:layout="@layout/fragment_play_song" >
+        <argument
+            android:name="songId"
+            app:argType="java.util.UUID" />
+        <action
+            android:id="@+id/back_to_show_songs"
+            app:destination="@id/musicListFragment" />
+    </fragment>
 </navigation>

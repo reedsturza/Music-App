@@ -3,10 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MusicListFragment">
+    android:paddingStart="10dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/music_list_recycler_view"
+    <TextView
+        android:id="@+id/playlistName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="24sp"
+        tools:text="@string/playlist_name" />
 </LinearLayout>

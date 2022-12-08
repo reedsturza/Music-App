@@ -1,11 +1,10 @@
-package edu.moravian.csci215.finalproject
+package edu.moravian.csci215.AndroidMusicPlayer
 
 import android.content.Context
 import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import java.util.*
 
 private const val DATABASE_NAME = "music-database"
@@ -28,50 +27,24 @@ class MusicRepository private constructor(context: Context) {
         .build()
 
     /**
-     * val for the allSongs in HierarchyDOA
+     * fun for the allSongs in HierarchyDAO
      * So other components can preform any operations they need on the database
      */
-    val allEvents: Flow<List<Song>> = database.musicDao().allSongs
+    fun allSongs(): Flow<List<Song>> = database.musicDao().allSongs
 
     /**
-     * function for the getSongById function in HierarchyDOA
+     * function for the getSongById function in HierarchyDAO
      * So other components can preform any operations they need on the database
-     * @param id
-     * @return Song
+     * @param songId
      */
-    suspend fun getSongById(id: UUID): Song = database.musicDao().getSongById(id)
+    suspend fun getSongById(songId: UUID): Song = database.musicDao().getSongById(songId)
 
     /**
-     * function for the addSong function in HierarchyDOA
-     * So other components can preform any operations they need on the database
-     * @param song
+     * function to insert a song into the database
+     * @param songName
+     * @param artist
      */
-    suspend fun addEvent(song: Song) = database.musicDao().addSong(song)
-
-    /**
-     * function for the updatePlaylist function in HierarchyDOA
-     * So other components can preform any operations they need on the database
-     * @param song
-     */
-    fun updatePlaylist(song: Song) {
-        coroutineScope.launch {
-            database.musicDao().updatePlaylist(song)
-        }
-    }
-
-    /**
-     * function for the removeSong function in HierarchyDOA
-     * So other components can preform any operations they need on the database
-     * @param song
-     */
-    suspend fun removeEvent(song: Song) = database.musicDao().removeSong(song)
-
-    /**
-     * function for the removeSongById function in HierarchyDOA
-     * So other components can preform any operations they need on the database
-     * @param id
-     */
-    suspend fun removeSongById(id: UUID) = database.musicDao().removeSongById(id)
+    suspend fun insertSong(song: Song) = database.musicDao().insertSong(song)
 
     companion object {
         private var INSTANCE: MusicRepository? = null
@@ -82,7 +55,10 @@ class MusicRepository private constructor(context: Context) {
          */
         fun initialize(context: Context) {
             if (INSTANCE == null) {
+                println(context)
                 INSTANCE = MusicRepository(context)
+                println(INSTANCE)
+                println(INSTANCE?.database)
             }
         }
 

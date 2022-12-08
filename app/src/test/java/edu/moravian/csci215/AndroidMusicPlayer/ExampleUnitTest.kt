@@ -1,4 +1,4 @@
-package edu.moravian.csci215.finalproject
+package edu.moravian.csci215.AndroidMusicPlayer
 
 import org.junit.Test
 

@@ -73,6 +73,11 @@ class MusicRepository private constructor(context: Context) {
                 INSTANCE = MusicRepository(context)
                 println(INSTANCE)
                 println(INSTANCE?.database)
+
+//                GlobalScope.launch {
+//                    INSTANCE?.insertSong(Song(songName = "monkey", artist = "artist!", rawPath = R.raw.monkey))
+//                    INSTANCE?.insertSong(Song(songName = "MOnke", artist = "ada", rawPath = R.raw.monkey, liked = true))
+//                }
             }
         }
 

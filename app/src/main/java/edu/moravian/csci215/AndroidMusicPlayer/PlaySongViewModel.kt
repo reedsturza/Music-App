@@ -27,7 +27,8 @@ class PlaySongViewModel(private val songId: UUID) : ViewModel() {
     // gets the song from the database when the view model is initialized
     init {
         viewModelScope.launch {
-            _song.value = repo.getSongById(songId)
+            val s = repo.getSongById(songId)
+            _song.value = s
         }
     }
 

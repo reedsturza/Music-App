@@ -65,7 +65,15 @@ class PlaySongFragment : Fragment() {
         //sets the previousFragment so when the back button on the menu is clicked it takes the user back
         previousFragment = args.previousFragment
 
-        val mediaPlayer: MediaPlayer = MediaPlayer.create(activity, R.raw.monkey)
+        // changes whether the song is liked or not in the database
+        if (playSongViewModel.song.value?.liked == false) {
+            playSongViewModel.updateSong { oldSong -> oldSong.copy(liked = true) }
+            // if the song isn't liked, when the liked is clicked it changes to ic_not_like
+        } else if (playSongViewModel.song.value?.liked == true) {
+            playSongViewModel.updateSong { oldSong -> oldSong.copy(liked = false) }
+        }
+
+        val mediaPlayer: MediaPlayer = MediaPlayer.create(activity, playSongViewModel.song.value!!.rawPath)
         // set the seek bar to 0
         binding.seekBar.progress = 0
         //set the max value that the seek bar can reach
@@ -184,15 +192,16 @@ class PlaySongFragment : Fragment() {
     private fun updateUI(song: Song) {
         binding.apply {
             /** sets the song name and artist to the correct values */
+            Log.i("M:", song.toString())
             Log.i("M:", song.songName)
             songName.text = song.songName
             artist.text = song.artist
 
             /** preset the liked to ic_like or ic_not_like */
-            if (playSongViewModel.song.value?.liked == false) {
+            if (song.liked) {
                 liked.setImageResource(R.drawable.ic_liked)
-            } else if (playSongViewModel.song.value?.liked == true) {
-               liked.setImageResource(R.drawable.ic_not_liked)
+            } else {
+                liked.setImageResource(R.drawable.ic_not_liked)
             }
 
             /** change the like or not like when clicked */
@@ -200,13 +209,9 @@ class PlaySongFragment : Fragment() {
                 // if the song is like, when the liked is clicked it changes to ic_like
                 if (playSongViewModel.song.value?.liked == false) {
                     liked.setImageResource(R.drawable.ic_liked)
-                    // changes the liked value in the database
-                    playSongViewModel.updateSong { oldSong -> oldSong.copy(liked = true) }
-                    // if the song isn't liked, when the liked is clicked it changes to ic_not_like
+                // if the song isn't liked, when the liked is clicked it changes to ic_not_like
                 } else if (playSongViewModel.song.value?.liked == true) {
                     liked.setImageResource(R.drawable.ic_not_liked)
-                    //changes the liked value in the database
-                    playSongViewModel.updateSong { oldSong -> oldSong.copy(liked = false) }
                 }
             }
         }

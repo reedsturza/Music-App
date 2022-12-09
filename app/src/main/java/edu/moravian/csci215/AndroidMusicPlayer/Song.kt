@@ -20,7 +20,7 @@ data class Song(
     val artist: String = "",
 
     /** the raw path for the music to play */
-    val rawPath: String = "",
+    val rawPath: Int = 0,
 
     /** whether a the song is liked or not */
     val liked: Boolean = false

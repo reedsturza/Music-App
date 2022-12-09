@@ -3,17 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/back_to_music_list_from_playlists"
+        android:id="@+id/back_to_music_list"
         android:icon="@drawable/ic_baseline_arrow_back_24"
         android:title="@string/back_menu_button"
         android:iconTint="@color/white"
         app:showAsAction="ifRoom|withText" />
-
-    <item
-        android:id="@+id/new_playlist"
-        android:icon="@drawable/ic_create_playlist"
-        android:title="@string/new_playlist"
-        android:iconTint="@color/white"
-        app:showAsAction="ifRoom|withText" />
-
 </menu>

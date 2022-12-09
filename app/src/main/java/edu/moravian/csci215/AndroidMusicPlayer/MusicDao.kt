@@ -16,6 +16,18 @@ interface MusicDao {
     val allSongs: Flow<List<Song>>
 
     /**
+     * @return all liked songs from the database
+     */
+    @Query("SELECT * FROM song WHERE liked=(:liked)")
+    fun allLikedSongs(liked: Boolean): Flow<List<Song>>
+
+    /**
+     * Updates the song, mostly for the liked feature
+     */
+    @Update
+    suspend fun updateSong(song: Song)
+
+    /**
      * Get a song from its ID.
      * @param songId
      * @return String songName

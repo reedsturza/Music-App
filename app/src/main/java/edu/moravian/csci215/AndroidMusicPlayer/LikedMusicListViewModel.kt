@@ -13,30 +13,22 @@ import java.util.*
 /**
  * View model for a list of music
  */
-class MusicListViewModel : ViewModel() {
+class LikedMusicListViewModel : ViewModel() {
     /** The repository we are using to perform queries */
     private val repo = MusicRepository.get()
 
     /** The internal, mutable, list of events (as a flow) */
-    private val _songs: MutableStateFlow<List<Song>> = MutableStateFlow(emptyList())
+    private val _likedSongs: MutableStateFlow<List<Song>> = MutableStateFlow(emptyList())
     /** the external list of songs (as a flow) */
-    val songs: StateFlow<List<Song>> = _songs.asStateFlow()
-
-    /**
-     * function to insert the song into the databse
-     * @param songName
-     * @param artist
-     * @param genre
-     */
-    suspend fun insertSong(song: Song) { repo.insertSong(song) }
+    val likedSongs: StateFlow<List<Song>> = _likedSongs.asStateFlow()
 
     /** When this object is created, start collecting the items from the database */
     init {
         viewModelScope.launch {
-            repo.allSongs().collect() {
-                _songs.value = it
+            // uses the liked songs function to collect all the liked songs
+            repo.allLikedSongs(true).collect() {
+                _likedSongs.value = it
             }
         }
     }
-
 }

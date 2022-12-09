@@ -1,14 +1,11 @@
 <resources>
     <string name="app_name">Android Music Player</string>
     <string name="song_name">Song Name</string>
-    <string name="playlist_name">Playlist Name</string>
-    <string name="new_playlist">New Playlist</string>
-    <string name="playlists">Playlists</string>
+    <string name="liked_music">Liked Music</string>
     <string name="artist">Artist</string>
     <string name="play_button">Play Button</string>
     <string name="pause_button">Pause Button</string>
     <string name="back_menu_button">Back</string>
-    <string name="name_playlist">Name The Playlist</string>
     <string name="click_me">Click Me!</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>

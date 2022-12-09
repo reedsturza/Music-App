@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_create_playlist.xml" value="0.1025" />
+        <entry key="app/src/main/res/drawable/ic_not_liked.xml" value="0.2215" />
         <entry key="app/src/main/res/drawable/ic_pause_button.xml" value="0.2215" />
         <entry key="app/src/main/res/drawable/ic_play_button.xml" value="0.2215" />
         <entry key="app/src/main/res/drawable/ic_playlist.xml" value="0.1025" />
@@ -13,16 +14,20 @@
         <entry key="app/src/main/res/layout/content_nav_graph.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_playlist_name.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_library.xml" value="0.2513641357421875" />
+        <entry key="app/src/main/res/layout/fragment_liked_music_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_music_list.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/fragment_play_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_play_music.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/fragment_play_song.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/layout/fragment_playlist.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_playlist_with_songs.xml" value="0.18931159420289856" />
+        <entry key="app/src/main/res/layout/liked_music_list_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/music_list_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/playlist_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/playlist_with_songs_item.xml" value="0.18931159420289856" />
         <entry key="app/src/main/res/menu-v26/fragment_music_menu.xml" value="0.25" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.25104166666666666" />
+        <entry key="app/src/main/res/menu/fragment_liked_music_menu.xml" value="0.25" />
         <entry key="app/src/main/res/menu/fragment_music_menu.xml" value="0.2600753784179688" />
         <entry key="app/src/main/res/menu/fragment_play_song.xml" value="0.2515625" />
         <entry key="app/src/main/res/menu/fragment_playlist_menu.xml" value="0.28286895751953134" />

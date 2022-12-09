@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -29,14 +30,33 @@ class PlaySongViewModel(private val songId: UUID) : ViewModel() {
             _song.value = repo.getSongById(songId)
         }
     }
-}
 
     /**
-     * PlaySongViewModelFacotry is responsible for creating the instance of the PlaySongViewModel
-     * @param songId
+     * Update the song in this view model
+     * @param onUpdate a function or lambda that takes an song (the old song)
+     *                  and returns a new song instance to replace it
      */
-    class PlaySongViewModelFactory(private val songId: UUID): ViewModelProvider.Factory {
-        override fun <T: ViewModel> create(modelClass: Class<T>): T {
-            return PlaySongViewModel(songId) as T
+    fun updateSong(onUpdate: (Song) -> Song) {
+        _song.update { oldSong ->
+            oldSong?.let { onUpdate(it) }
         }
     }
+
+    /**
+     * Updates the event in the database when the view model is done
+     */
+    override fun onCleared() {
+        super.onCleared()
+        song.value?.let { repo.updateSong(it) }
+    }
+}
+
+/**
+ * PlaySongViewModelFactory is responsible for creating the instance of the PlaySongViewModel
+ * @param songId
+ */
+class PlaySongViewModelFactory(private val songId: UUID): ViewModelProvider.Factory {
+    override fun <T: ViewModel> create(modelClass: Class<T>): T {
+        return PlaySongViewModel(songId) as T
+    }
+}

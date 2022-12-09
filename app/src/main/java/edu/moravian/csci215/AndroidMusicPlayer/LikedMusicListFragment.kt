@@ -1,6 +1,7 @@
 package edu.moravian.csci215.AndroidMusicPlayer
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -11,31 +12,32 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import edu.moravian.csci215.AndroidMusicPlayer.databinding.FragmentMusicListBinding
-import edu.moravian.csci215.AndroidMusicPlayer.databinding.MusicListItemBinding
+import edu.moravian.csci215.AndroidMusicPlayer.databinding.FragmentLikedMusicListBinding
+import edu.moravian.csci215.AndroidMusicPlayer.databinding.LikedMusicListItemBinding
 import kotlinx.coroutines.launch
+import java.util.*
 
 /**
  * A fragment that displays the list of unfiltered music that isn't in a playlist
  */
-class MusicListFragment : Fragment() {
+class LikedMusicListFragment : Fragment() {
     /** Binding for the views of the fragment (nullable version) */
-    private var _binding: FragmentMusicListBinding? = null
+    private var _binding: FragmentLikedMusicListBinding? = null
     /** Binding for the views of the fragment (non-nullable accessor) */
-    private val binding: FragmentMusicListBinding
+    private val binding: FragmentLikedMusicListBinding
         get() = checkNotNull(_binding) { "Binding is currently null! Oh-uh!" }
 
     /** The view model containing the songs we are listing */
-    private val musicListViewModel: MusicListViewModel by viewModels()
+    private val likedMusicListViewModel: LikedMusicListViewModel by viewModels()
 
     /** The list of songs we are showing */
-    private var songs: List<Song> = emptyList()
+    private var likedSongs: List<Song> = emptyList()
 
     /** Create the binding view for this layout. */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentMusicListBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentLikedMusicListBinding.inflate(layoutInflater, container, false)
         // linear layout manager
-        binding.musicListRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.likedMusicListRecyclerView.layoutManager = LinearLayoutManager(context)
         return binding.root
     }
 
@@ -48,11 +50,11 @@ class MusicListFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Setup the recycler view
-        binding.musicListRecyclerView.adapter = MusicListAdapter()
+        binding.likedMusicListRecyclerView.adapter = LikedMusicListAdapter()
 
         // the menu provider to the host activity
         requireActivity().addMenuProvider(
-            MusicListMenu(),
+            LikedMusicListMenu(),
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
@@ -60,9 +62,9 @@ class MusicListFragment : Fragment() {
         // Uses a coroutine to collect the events from the database (and notify the adapter that things have changed)
         lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                musicListViewModel.songs.collect {
-                    songs = it
-                    (binding.musicListRecyclerView.adapter as MusicListAdapter).notifyDataSetChanged()
+                likedMusicListViewModel.likedSongs.collect {
+                    likedSongs = it
+                    (binding.likedMusicListRecyclerView.adapter as LikedMusicListAdapter).notifyDataSetChanged()
                 }
             }
         }
@@ -78,32 +80,32 @@ class MusicListFragment : Fragment() {
      * Navigate to the song player fragment showing the specified event
      * @param song the song to show the details for
      */
-    private fun showSong(song: Song) {
+    fun showLikedSong(song: Song) {
         findNavController().navigate(
-            MusicListFragmentDirections.showClickedSong(song.songId, "MusicList")
+            LikedMusicListFragmentDirections.showLikedSong(song.songId, "LikedMusic")
         )
     }
 
     /**
-     * Navigate to the liked music fragment
+     * function to go back to the musicListFragment when the back menu item is clicked
      */
-    private fun goToLikedMusic() {
+    private fun goBack() {
         findNavController().navigate(
-            MusicListFragmentDirections.showLikedMusic()
+            LikedMusicListFragmentDirections.backToMusicListFromLikedMusic()
         )
     }
 
     /**
      * inner class for the Calendar menu and its functions
      */
-    private inner class MusicListMenu: MenuProvider {
+    private inner class LikedMusicListMenu: MenuProvider {
         /**
          * onCreateMenu inflate the menus defined in fragment_event_menu
          * @param menu
          * @param menuInflater
          */
         override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            menuInflater.inflate(R.menu.fragment_music_menu, menu)
+            menuInflater.inflate(R.menu.fragment_liked_music_menu, menu)
         }
 
         /**
@@ -111,8 +113,8 @@ class MusicListFragment : Fragment() {
          * @param menuItem
          */
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-            if (menuItem.itemId == R.id.go_to_liked_music) {
-                goToLikedMusic()
+            if (menuItem.itemId == R.id.back_to_music_list) {
+                goBack()
                 return true
             }
             return false
@@ -123,7 +125,7 @@ class MusicListFragment : Fragment() {
      * The ViewHolder for the items in the recycler view. This uses the layout
      * given in event_type_item.xml
      */
-    private inner class MusicListHolder(val binding: MusicListItemBinding): RecyclerView.ViewHolder(binding.root) {
+    private inner class LikedMusicListHolder(val binding: LikedMusicListItemBinding): RecyclerView.ViewHolder(binding.root) {
         /**
          * Update this view holder to display the given item.
          * @param song the song whose data we should use
@@ -136,7 +138,7 @@ class MusicListFragment : Fragment() {
 
             binding.root.setOnClickListener {
                 // when a song is clicked is shows the song in the PlaySongFragment
-                showSong(song)
+                showLikedSong(song)
             }
         }
     }
@@ -146,26 +148,26 @@ class MusicListFragment : Fragment() {
      * songs as the backing data and produces MusicListHolders for
      * the ViewHolders.
      */
-    private inner class MusicListAdapter() : RecyclerView.Adapter<MusicListHolder>() {
+    private inner class LikedMusicListAdapter() : RecyclerView.Adapter<LikedMusicListHolder>() {
         /**
          * To create the view holder we inflate the layout we want to use for
          * each item and then return an ItemViewHolder holding the inflated view
          */
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            MusicListHolder(MusicListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            LikedMusicListHolder(LikedMusicListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
         /**
          * Binds an existing ViewHolder to the item at a given position in the data
          */
-        override fun onBindViewHolder(holder: MusicListHolder, position: Int) {
-            holder.bind(songs[position])
+        override fun onBindViewHolder(holder: LikedMusicListHolder, position: Int) {
+            holder.bind(likedSongs[position])
         }
 
         /**
          * The number of items in the list
          */
         override fun getItemCount(): Int {
-            return songs.size
+            return likedSongs.size
         }
     }
 }

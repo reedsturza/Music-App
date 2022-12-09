@@ -16,6 +16,12 @@ data class Song(
     /** song name is for the name of the song **/
     val songName: String = "",
 
-    /** the artist that released the song */
-    val artist: String = ""
+    /** the artist the song was released by */
+    val artist: String = "",
+
+    /** the raw path for the music to play */
+    val rawPath: String = "",
+
+    /** whether a the song is liked or not */
+    val liked: Boolean = false
 )

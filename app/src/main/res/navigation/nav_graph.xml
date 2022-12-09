@@ -14,17 +14,8 @@
             android:id="@+id/show_clicked_song"
             app:destination="@id/playSongFragment" />
         <action
-            android:id="@+id/got_to_playlists"
-            app:destination="@id/playlistFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/playlistFragment"
-        android:name="edu.moravian.csci215.AndroidMusicPlayer.PlaylistFragment"
-        android:label="fragment_playlist"
-        tools:layout="@layout/fragment_playlist" >
-        <action
-            android:id="@+id/back_to_music_list_from_playlists"
-            app:destination="@id/musicListFragment" />
+            android:id="@+id/show_liked_music"
+            app:destination="@id/likedMusicListFragment" />
     </fragment>
     <fragment
         android:id="@+id/playSongFragment"
@@ -36,6 +27,23 @@
             app:argType="java.util.UUID" />
         <action
             android:id="@+id/back_to_show_songs"
+            app:destination="@id/musicListFragment" />
+        <action
+            android:id="@+id/back_to_liked_music_list"
+            app:destination="@id/likedMusicListFragment" />
+        <argument
+            android:name="previousFragment"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/likedMusicListFragment"
+        android:name="edu.moravian.csci215.AndroidMusicPlayer.LikedMusicListFragment"
+        android:label="LikedMusicListFragment" >
+        <action
+            android:id="@+id/show_liked_song"
+            app:destination="@id/playSongFragment" />
+        <action
+            android:id="@+id/back_to_music_list_from_liked_music"
             app:destination="@id/musicListFragment" />
     </fragment>
 </navigation>

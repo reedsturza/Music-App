@@ -17,6 +17,7 @@ class MusicApplication : Application() {
         // initialize the repositories
         MusicRepository.initialize(this)
         LyricsRepository.initialize(this)
+        PreferencesRepository.initialize(this)
 
         val playerIntent = Intent(this, MediaPlayerService::class.java)
         startService(playerIntent)

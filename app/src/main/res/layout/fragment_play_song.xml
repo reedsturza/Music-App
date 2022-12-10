@@ -12,6 +12,7 @@
         android:id="@+id/songName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:textColor="@color/black"
         android:textSize="24sp"
         tools:text="@string/song_name" />
@@ -27,10 +28,11 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="401dp"
         android:layout_margin="12dp"
-        android:src="@drawable/music_player"
-        android:contentDescription="@string/song_name" />
+        android:contentDescription="@string/song_name"
+        android:cropToPadding="false"
+        android:src="@drawable/background_img" />
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -58,6 +60,7 @@
         android:id="@+id/liked"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:backgroundTint="#00FFFFFF"
         android:contentDescription="@string/click_me"
         android:src="@drawable/ic_not_liked" />
 

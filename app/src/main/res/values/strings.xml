@@ -1,12 +1,17 @@
 <resources>
+    <!-- Lyric and Song entity strings -->
     <string name="app_name">Android Music Player</string>
     <string name="song_name">Song Name</string>
     <string name="liked_music">Liked Music</string>
     <string name="artist">Artist</string>
+    <string name="lyrics">Lyrics</string>
+
+    <!-- Layout strings -->
     <string name="play_button">Play Button</string>
     <string name="pause_button">Pause Button</string>
     <string name="back_menu_button">Back</string>
     <string name="click_me">Click Me!</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+
 </resources>

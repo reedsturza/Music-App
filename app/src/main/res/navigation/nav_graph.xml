@@ -16,6 +16,9 @@
         <action
             android:id="@+id/show_liked_music"
             app:destination="@id/likedMusicListFragment" />
+        <action
+            android:id="@+id/show_click_lyrics"
+            app:destination="@id/lyricsFragment" />
     </fragment>
     <fragment
         android:id="@+id/playSongFragment"
@@ -31,9 +34,6 @@
         <action
             android:id="@+id/back_to_liked_music_list"
             app:destination="@id/likedMusicListFragment" />
-        <argument
-            android:name="previousFragment"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/likedMusicListFragment"
@@ -45,5 +45,31 @@
         <action
             android:id="@+id/back_to_music_list_from_liked_music"
             app:destination="@id/musicListFragment" />
+        <action
+            android:id="@+id/show_clicked_lyrics_liked_music"
+            app:destination="@id/lyricsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lyricsFragment"
+        android:name="edu.moravian.csci215.AndroidMusicPlayer.LyricsFragment"
+        android:label="LyricsFragment" >
+        <argument
+            android:name="songName"
+            app:argType="string" />
+        <argument
+            android:name="songArtist"
+            app:argType="string" />
+        <argument
+            android:name="songId"
+            app:argType="java.util.UUID" />
+        <action
+            android:id="@+id/back_to_music_list_from_lyrics"
+            app:destination="@id/musicListFragment" />
+        <argument
+            android:name="previousFragment"
+            app:argType="string" />
+        <action
+            android:id="@+id/back_to_liked_music_from_lyrics"
+            app:destination="@id/likedMusicListFragment" />
     </fragment>
 </navigation>

@@ -56,7 +56,7 @@ class MusicRepository private constructor(context: Context) {
 
     /**
      * function to insert a song into the database
-     * @param songName
+     * @param song
      */
     suspend fun insertSong(song: Song) = database.musicDao().insertSong(song)
 
@@ -75,8 +75,13 @@ class MusicRepository private constructor(context: Context) {
                 println(INSTANCE?.database)
 
 //                GlobalScope.launch {
-//                    INSTANCE?.insertSong(Song(songName = "monkey", artist = "artist!", rawPath = R.raw.monkey))
-//                    INSTANCE?.insertSong(Song(songName = "MOnke", artist = "ada", rawPath = R.raw.monkey, liked = true))
+//                    INSTANCE?.insertSong(Song(songId = UUID.fromString("ccc726c1-1d0d-48f0-b0d3-826eaa81f61b"),songName = "monkey", artist = "artist!", rawPath = R.raw.monkey))
+//                    INSTANCE?.insertSong(Song(songId = UUID.fromString("7c43c391-fd7d-48b8-92a1-1cb327498632"),songName = "Sweet Emotion", artist = "Aerosmith", rawPath = R.raw.sweet_emotion, liked = true))
+//                    INSTANCE?.insertSong(Song(songId = UUID.fromString("cf5ecc77-b8ca-4bbd-a4c6-6ece4af287ab"),songName= "Aint No Rest For The Wicked", artist = "Cage The Elephant", rawPath = R.raw.aint_no_rest_for_the_wicked))
+//                    INSTANCE?.insertSong(Song(songId = UUID.fromString("6f44e776-a740-4422-be96-6e61e639c1dc"), songName = "Don't Stop Believing", artist = "Journey", rawPath = R.raw.dont_stop_believin))
+//                    INSTANCE?.insertSong(Song(songId = UUID.fromString("02f0d4f8-56e2-4c2a-bfed-e73328aa1559"), songName = "Pursuit of Happiness", artist = "Kid Cudi", rawPath = R.raw.pursuit_of_happiness))
+//                    INSTANCE?.insertSong(Song(songId = UUID.fromString("b5a663b5-8aef-4658-91e0-7890c0b0a8c4"), songName = "Pursuit of Happiness (Steve Aoki Remix)", artist = "Kid Cudi AUDIO", rawPath = R.raw.pursuit_of_happiness_steve_aoki_remix))
+//                    INSTANCE?.insertSong(Song(songId = UUID.fromString("9fa5186d-97dd-4e6a-9f86-857c284027b4"), songName = "Return of the Mack", artist = "Mark Morrison", rawPath = R.raw.return_of_the_mack))
 //                }
             }
         }

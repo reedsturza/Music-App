@@ -38,6 +38,6 @@ class LyricsViewModel(private val lyricsId: UUID) : ViewModel() {
  */
 class LyricsViewModelFactory(private val lyricsId: UUID): ViewModelProvider.Factory {
     override fun <T: ViewModel> create(modelClass: Class<T>): T {
-        return PlaySongViewModel(lyricsId) as T
+        return LyricsViewModel(lyricsId) as T
     }
 }

@@ -82,7 +82,17 @@ class LikedMusicListFragment : Fragment() {
      */
     fun showLikedSong(song: Song) {
         findNavController().navigate(
-            LikedMusicListFragmentDirections.showLikedSong(song.songId, "LikedMusic")
+            LikedMusicListFragmentDirections.showLikedSong(song.songId)
+        )
+    }
+
+    /**
+     * Navigate to the lyrics fragment
+     * @param song the song for lyrics
+     */
+    private fun showLyrics(song: Song) {
+        findNavController().navigate(
+            LikedMusicListFragmentDirections.showClickedLyricsLikedMusic(song.songName, song.artist, song.songId, "LikedMusic")
         )
     }
 
@@ -136,9 +146,14 @@ class LikedMusicListFragment : Fragment() {
                 artist.text = song.artist
             }
 
+            // when a song is clicked is shows the song in the PlaySongFragment
             binding.root.setOnClickListener {
-                // when a song is clicked is shows the song in the PlaySongFragment
                 showLikedSong(song)
+            }
+
+            // when the songLyrics icon is clicked it shows the songs lyrics
+            binding.songLyrics.setOnClickListener {
+                showLyrics(song)
             }
         }
     }

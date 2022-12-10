@@ -1,0 +1,17 @@
+<resources>
+    <!-- Lyric and Song entity strings -->
+    <string name="app_name">Reproductor de música Android</string>
+    <string name="song_name">Nombre de la canción</string>
+    <string name="liked_music">Música gustada</string>
+    <string name="artist">Artista</string>
+    <string name="lyrics">La Letra</string>
+
+    <!-- Layout strings -->
+    <string name="play_button">Botón reproducir</string>
+    <string name="pause_button">Botón de pausa</string>
+    <string name="back_menu_button">Atrás</string>
+    <string name="click_me">¡Haz clic en mí!</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+
+</resources>

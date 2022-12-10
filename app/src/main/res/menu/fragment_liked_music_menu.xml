@@ -8,4 +8,5 @@
         android:title="@string/back_menu_button"
         android:iconTint="@color/white"
         app:showAsAction="ifRoom|withText" />
+
 </menu>
